@@ -22,9 +22,16 @@
             function Board() {
                 const [squares, setSquares] = React.useState(Array(9).fill(null));
                 const [xIsNext, setXIsNext] = React.useState(true)
+                const winner = calculateWinner(squares);
+                let status;
+                if (winner) {
+                    status = "Ganador : " + winner ;
+                }else {
+                    status = "Siguiente jugador :" + (xIsNext ? "X" : "0");
+                }
                 function handleClick(i) {
                     const nextSquares = squares.slice();
-                    if (squares[i] || calculateWinner(square)) {
+                    if (squares[i] || calculateWinner(squares)) {
                         return;
                     }
                     if (xIsNext) {
@@ -42,6 +49,7 @@
 
                 return (
                     <div>
+                        <div className="status">{status}</div>
                         <div className="board-row">
                             <Square value={squares[0]} onSquareClick={() => handleClick(0)} />
                             <Square value={squares[1]} onSquareClick={() => handleClick(1)} />
